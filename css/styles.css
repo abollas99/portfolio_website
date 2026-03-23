@@ -1517,8 +1517,20 @@ img { display: block; max-width: 100%; }
   /* Open-to-work badge — hide on mobile to keep header compact */
   .open-to-work-badge { display: none; }
 
-  /* Resume button — hide in sidebar on mobile (tiny sidebar), show later if needed */
-  .resume-download-btn { display: none; }
+  /* Resume button — compact pill that spans full width below the nav */
+  .resume-download-btn {
+    display: flex;
+    margin: 0;
+    padding: 0.45rem 1rem;
+    font-size: 0.68rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(0, 212, 255, 0.04);
+    justify-content: center;
+  }
 
   /* Social proof quote — compact on mobile */
   .social-proof-quote { padding: 0.75rem 0.9rem; margin-top: 1rem; }
