@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Browser Test Suite</title>
+  <style>
+    :root {
+      --bg:     #06090f;
+      --panel:  #0d1520;
+      --border: #1a2a3e;
+      --cyan:   #00d4ff;
+      --green:  #00ff9f;
+      --red:    #ff4f6a;
+      --yellow: #ffd166;
+      --text:   #c8d8ea;
+      --dim:    #5a7a9a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: var(--bg);
+      color: var(--text);
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Left panel: test output ── */
+    #test-panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    #test-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+    }
+
+    #test-header h1 {
+      font-size: 0.85rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    #test-header p {
+      font-size: 0.7rem;
+      color: var(--dim);
+    }
+
+    #summary-bar {
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.2);
+    }
+
+    .stat { display: flex; align-items: center; gap: 0.4rem; }
+    .stat .val { font-weight: bold; }
+    .stat.pass .val { color: var(--green); }
+    .stat.fail .val { color: var(--red); }
+    .stat.total .val { color: var(--cyan); }
+
+    #progress-bar-wrap {
+      height: 3px;
+      background: var(--border);
+    }
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    #test-output {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.75rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .suite-label {
+      font-size: 0.7rem;
+      color: var(--cyan);
+      padding: 0.8rem 1.25rem 0.3rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .suite-label::before {
+      content: '▸';
+      color: var(--cyan);
+    }
+
+    .test-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.22rem 1.25rem;
+      font-size: 0.72rem;
+      line-height: 1.5;
+    }
+
+    .test-icon { flex-shrink: 0; margin-top: 2px; }
+    .test-icon.p { color: var(--green); }
+    .test-icon.f { color: var(--red); }
+    .test-icon.s { color: var(--yellow); }
+
+    .test-label { flex: 1; color: var(--text); }
+    .test-label.fail { color: var(--red); }
+    .test-reason { color: var(--dim); font-size: 0.65rem; margin-top: 1px; }
+
+    #run-btn {
+      margin: 0.75rem 1.25rem;
+      padding: 0.6rem 1rem;
+      background: rgba(0,212,255,0.1);
+      border: 1px solid var(--cyan);
+      border-radius: 6px;
+      color: var(--cyan);
+      font-family: inherit;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    #run-btn:hover { background: rgba(0,212,255,0.2); }
+    #run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Right panel: iframe ── */
+    #preview-panel {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #preview-label {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      z-index: 10;
+    }
+
+    #portfolio-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Highlight overlay for DOM inspection */
+    #highlight-overlay {
+      position: absolute;
+      pointer-events: none;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LEFT: Test Panel ══ -->
+<div id="test-panel">
+  <div id="test-header">
+    <h1>Portfolio Test Suite</h1>
+    <p>Browser-based DOM &amp; behaviour tests</p>
+  </div>
+
+  <div id="summary-bar">
+    <div class="stat total"><span class="val" id="s-total">0</span> total</div>
+    <div class="stat pass" ><span class="val" id="s-pass">0</span> passed</div>
+    <div class="stat fail" ><span class="val" id="s-fail">0</span> failed</div>
+  </div>
+  <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+  <div id="test-output"></div>
+  <button id="run-btn" onclick="runAll()">▶ Run Tests</button>
+</div>
+
+<!-- ══ RIGHT: Portfolio iframe ══ -->
+<div id="preview-panel">
+  <span id="preview-label">Live Preview</span>
+  <iframe id="portfolio-frame" src="../index.html" id="portfolio-frame"></iframe>
+  <div id="highlight-overlay"></div>
+</div>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────────
+let passed = 0, failed = 0, skipped = 0;
+const output = document.getElementById('test-output');
+
+function resetState() {
+  passed = failed = skipped = 0;
+  output.innerHTML = '';
+  updateSummary();
+}
+
+function updateSummary() {
+  const total = passed + failed + skipped;
+  document.getElementById('s-total').textContent = total;
+  document.getElementById('s-pass').textContent  = passed;
+  document.getElementById('s-fail').textContent  = failed;
+  document.getElementById('progress-bar').style.width =
+    total ? Math.round((passed / total) * 100) + '%' : '0%';
+}
+
+// ── Rendering ────────────────────────────────────────────────────────────────
+function addSuite(name) {
+  const el = document.createElement('div');
+  el.className = 'suite-label';
+  el.textContent = name;
+  output.appendChild(el);
+}
+
+function addResult(label, ok, reason = '') {
+  const row = document.createElement('div');
+  row.className = 'test-row';
+
+  const icon = document.createElement('span');
+  icon.className = 'test-icon ' + (ok ? 'p' : 'f');
+  icon.textContent = ok ? '✔' : '✘';
+
+  const body = document.createElement('div');
+  const lbl = document.createElement('div');
+  lbl.className = 'test-label' + (ok ? '' : ' fail');
+  lbl.textContent = label;
+  body.appendChild(lbl);
+
+  if (!ok && reason) {
+    const r = document.createElement('div');
+    r.className = 'test-reason';
+    r.textContent = reason;
+    body.appendChild(r);
+  }
+
+  row.appendChild(icon);
+  row.appendChild(body);
+  output.appendChild(row);
+  output.scrollTop = output.scrollHeight;
+  updateSummary();
+}
+
+function assert(condition, label, reason = '') {
+  if (condition) { passed++; addResult(label, true); }
+  else           { failed++; addResult(label, false, reason); }
+}
+
+function skip(label) {
+  skipped++;
+  const row = document.createElement('div');
+  row.className = 'test-row';
+  row.innerHTML = `<span class="test-icon s">⊘</span><div class="test-label" style="color:var(--dim)">${label}</div>`;
+  output.appendChild(row);
+  updateSummary();
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function getDoc() {
+  return document.getElementById('portfolio-frame').contentDocument;
+}
+
+function getWin() {
+  return document.getElementById('portfolio-frame').contentWindow;
+}
+
+function q(sel)    { return getDoc().querySelector(sel); }
+function qAll(sel) { return getDoc().querySelectorAll(sel); }
+
+function sleep(ms) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// Click a nav item inside the iframe
+function clickNav(sectionId) {
+  const item = getDoc().querySelector(`[data-section="${sectionId}"]`);
+  if (item) item.click();
+}
+
+// ── Test Suites ───────────────────────────────────────────────────────────────
+
+async function testStructure() {
+  addSuite('1 · DOM Structure');
+
+  assert(!!q('#circuit-canvas'),    '#circuit-canvas exists');
+  assert(!!q('#trace-svg'),         '#trace-svg exists');
+  assert(!!q('#circuit-nav'),       '#circuit-nav exists');
+  assert(!!q('.sidebar'),           '.sidebar exists');
+  assert(!!q('.content-area'),      '.content-area exists');
+  assert(!!q('.layout'),            '.layout exists');
+  assert(!!q('.circuit-connector'), '.circuit-connector exists');
+
+  // All 6 sections
+  const sections = ['about','experience','projects','skills','education','contact'];
+  for (const id of sections) {
+    assert(!!q(`#${id}`), `section #${id} exists`);
+  }
+
+  // All 6 nav items
+  for (const id of sections) {
+    assert(!!q(`[data-section="${id}"]`), `nav item data-section="${id}" exists`);
+  }
+
+  // Profile elements
+  assert(!!q('.avatar'),       '.avatar img exists');
+  assert(!!q('.profile-name'), '.profile-name exists');
+  assert(!!q('.dot-pulse'),    'location pulse dot exists');
+
+  // Content cards count
+  assert(qAll('.timeline-item').length >= 3,  `timeline items ≥ 3 (found ${qAll('.timeline-item').length})`);
+  assert(qAll('.project-card').length  >= 3,  `project cards ≥ 3 (found ${qAll('.project-card').length})`);
+  assert(qAll('.skill-group').length   >= 5,  `skill groups ≥ 5 (found ${qAll('.skill-group').length})`);
+  assert(qAll('.edu-card').length      >= 3,  `edu cards ≥ 3 (found ${qAll('.edu-card').length})`);
+  assert(qAll('.contact-card').length  >= 4,  `contact cards ≥ 4 (found ${qAll('.contact-card').length})`);
+
+  // Trips
+  assert(!!q('#trips-grid'),        '#trips-grid exists');
+  assert(!!q('.placeholder-card'),  'trip photo placeholder card exists');
+}
+
+async function testContent() {
+  addSuite('2 · Content');
+
+  const body = getDoc().body.textContent;
+  const check = (text, label) => assert(body.includes(text), label || `"${text}" in page`);
+
+  check('Anthony Bollas');
+  check('Union, NJ');
+  check('IT Professional');
+  check('5+ years');
+  check('CompTIA Network+');
+  check('Hiking');
+  check('Taking Trips');
+  check('Self Care');
+  check('Always Learning');
+  check('Apple Specialist');
+  check('Software Developer Apprentice');
+  check('Advanced Repair Agent');
+  check('Geek Squad');
+  check('Prosumer Network Lab');
+  check('Home DNS Server');
+  check('Active Directory Home Lab');
+  check('Pi-hole');
+  check('Proxmox VE');
+  check('Kean University');
+  check('Union County College');
+  check('In Progress');
+
+  // Phone number must NOT appear
+  assert(!body.includes('973-873'), 'phone number NOT in page content');
+  assert(!body.includes('873-4304'), 'phone digits NOT in page content');
+}
+
+async function testLinks() {
+  addSuite('3 · Links & Hrefs');
+
+  const links = Array.from(qAll('a'));
+  const hrefs = links.map(l => l.getAttribute('href') || '');
+
+  assert(hrefs.some(h => h === 'mailto:anthonybollas@proton.me'), 'ProtonMail mailto href');
+  assert(hrefs.some(h => h === 'mailto:bollascareer@gmail.com'),  'Gmail mailto href');
+  assert(hrefs.some(h => h.includes('linkedin.com/in/realtone')), 'LinkedIn href');
+  assert(hrefs.some(h => h.includes('github.com/abollas99')),     'GitHub href');
+
+  // External links open in new tab
+  const external = links.filter(l => {
+    const h = l.getAttribute('href') || '';
+    return h.startsWith('http');
+  });
+  const allBlank = external.every(l => l.getAttribute('target') === '_blank');
+  assert(allBlank, `all ${external.length} external links have target="_blank"`);
+}
+
+async function testNavigation() {
+  addSuite('4 · Navigation & Section Switching');
+
+  // About should be active by default
+  const aboutSection = q('#about');
+  const aboutNav     = q('[data-section="about"]');
+  assert(aboutSection.classList.contains('active'), '#about section active on load');
+  assert(aboutNav.classList.contains('active'),     'about nav item active on load');
+
+  // Only one section active at a time
+  let activeSections = qAll('.content-box.active');
+  assert(activeSections.length === 1, `exactly 1 active section on load (found ${activeSections.length})`);
+
+  // Switch to Experience
+  clickNav('experience');
+  await sleep(600);
+
+  const expSection = q('#experience');
+  const expNav     = q('[data-section="experience"]');
+  assert(expSection.classList.contains('active'),   '#experience becomes active');
+  assert(expNav.classList.contains('active'),       'experience nav item becomes active');
+  assert(!aboutSection.classList.contains('active'), '#about deactivates after switch');
+
+  activeSections = qAll('.content-box.active');
+  assert(activeSections.length === 1, `exactly 1 active section after switch (found ${activeSections.length})`);
+
+  // Cycle through all sections
+  const ids = ['projects','skills','education','contact','about'];
+  for (const id of ids) {
+    clickNav(id);
+    await sleep(550);
+    const sec = q(`#${id}`);
+    assert(sec.classList.contains('active'), `#${id} activates on click`);
+  }
+}
+
+async function testCircuitTraces() {
+  addSuite('5 · Circuit Trace SVG');
+
+  const svg = q('#trace-svg');
+  assert(!!svg, '#trace-svg element exists');
+
+  // After init, SVG should contain path elements (buildTraces runs on load)
+  await sleep(300);
+  const paths = svg.querySelectorAll('path');
+  assert(paths.length >= 6, `SVG has ≥ 6 path elements after init (found ${paths.length})`);
+
+  // At least one path should be visible (opacity 1) for the active section
+  const visiblePaths = Array.from(paths).filter(p => {
+    const op = p.style.opacity;
+    return op === '1' || op === '';
+  });
+  assert(visiblePaths.length >= 1, `at least 1 visible active trace path (found ${visiblePaths.length})`);
+
+  // SVG has a viewBox
+  assert(svg.hasAttribute('viewBox'), 'trace SVG has viewBox attribute');
+
+  // Charge dot circles
+  const circles = svg.querySelectorAll('circle');
+  assert(circles.length >= 1, `SVG contains ≥ 1 charge dot circle (found ${circles.length})`);
+}
+
+async function testCircuitBackground() {
+  addSuite('6 · Circuit Background Canvas');
+
+  const canvas = q('#circuit-canvas');
+  assert(!!canvas, '#circuit-canvas element exists');
+
+  // Canvas should have been sized by circuit-bg.js
+  const w = parseInt(canvas.getAttribute('width')  || canvas.width);
+  const h = parseInt(canvas.getAttribute('height') || canvas.height);
+  assert(w > 100, `canvas width set (${w}px)`);
+  assert(h > 100, `canvas height set (${h}px)`);
+
+  // Canvas position
+  const style = getWin().getComputedStyle(canvas);
+  assert(style.position === 'fixed', 'canvas is position: fixed');
+}
+
+async function testStyles() {
+  addSuite('7 · CSS & Visual Styles');
+
+  const win = getWin();
+
+  // Sidebar background should be dark
+  const sidebar = q('.sidebar');
+  assert(!!sidebar, '.sidebar renders');
+  const sbStyle = win.getComputedStyle(sidebar);
+  assert(sbStyle.display !== 'none', 'sidebar is visible');
+
+  // Layout should be a grid
+  const layout = q('.layout');
+  const layStyle = win.getComputedStyle(layout);
+  assert(layStyle.display === 'grid', '.layout uses CSS grid');
+
+  // Content area
+  const contentArea = q('.content-area');
+  const caStyle = win.getComputedStyle(contentArea);
+  assert(caStyle.overflow === 'hidden', '.content-area overflow is hidden');
+
+  // Active section is not display:none
+  const activeSection = q('.content-box.active');
+  if (activeSection) {
+    const asStyle = win.getComputedStyle(activeSection);
+    assert(asStyle.display !== 'none', 'active .content-box is not display:none');
+    assert(parseFloat(asStyle.opacity) > 0.5, 'active .content-box has opacity > 0.5');
+  }
+
+  // Avatar ring exists and is visible
+  const ring = q('.avatar-ring');
+  assert(!!ring, '.avatar-ring exists');
+  const ringStyle = win.getComputedStyle(ring);
+  assert(ringStyle.display !== 'none', '.avatar-ring is visible');
+}
+
+async function testResponsiveness() {
+  addSuite('8 · Resilience Checks');
+
+  // Clicking the already-active nav item should not break anything
+  const before = q('.content-box.active')?.id;
+  clickNav(before);
+  await sleep(400);
+  const after = q('.content-box.active')?.id;
+  assert(before === after, 'clicking active nav item does not change section');
+
+  // Rapid nav clicks should settle cleanly
+  clickNav('experience');
+  clickNav('projects');
+  clickNav('skills');
+  await sleep(700);
+  const settled = q('.content-box.active');
+  assert(settled?.id === 'skills', 'rapid clicks settle on last-clicked section');
+  assert(qAll('.content-box.active').length === 1, 'exactly 1 section active after rapid clicks');
+}
+
+// ── Run All ───────────────────────────────────────────────────────────────────
+async function runAll() {
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Running…';
+  resetState();
+
+  // Wait for iframe to be fully loaded
+  const frame = document.getElementById('portfolio-frame');
+  if (!frame.contentDocument || frame.contentDocument.readyState !== 'complete') {
+    await new Promise(r => frame.addEventListener('load', r, { once: true }));
+  }
+  // Extra wait for JS init (buildTraces, canvas)
+  await sleep(400);
+
+  try {
+    await testStructure();
+    await testContent();
+    await testLinks();
+    await testNavigation();
+    await testCircuitTraces();
+    await testCircuitBackground();
+    await testStyles();
+    await testResponsiveness();
+  } catch (err) {
+    failed++;
+    addResult('Unexpected test error: ' + err.message, false, err.stack?.split('\n')[1] || '');
+    updateSummary();
+  }
+
+  btn.disabled = false;
+  const allPassed = failed === 0;
+  btn.textContent = allPassed
+    ? `✔ All ${passed} passed — Run Again`
+    : `✘ ${failed} failed — Run Again`;
+  btn.style.borderColor = allPassed ? 'var(--green)' : 'var(--red)';
+  btn.style.color       = allPassed ? 'var(--green)' : 'var(--red)';
+}
+
+// Auto-run when iframe finishes loading
+document.getElementById('portfolio-frame').addEventListener('load', () => {
+  setTimeout(runAll, 300);
+});
+</script>
+</body>
+</html>

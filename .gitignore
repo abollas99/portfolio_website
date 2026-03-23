@@ -1,0 +1,37 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large originals — web-optimised copies live in assets/images/trips/
+# Keep only trips/ subfolder; exclude everything else in assets/images/
+assets/images/*.jpeg
+assets/images/*.jpg
+assets/images/*.png
+assets/images/*.HEIC
+assets/images/*.heic
+assets/images/*.dmg
+assets/images/*.pdf
+assets/images/*.docx
+assets/images/~$*
+
+# Claude local settings (may contain personal config)
+.claude/settings.local.json
+
+# Node (test runner only — no node_modules exist)
+node_modules/
+
+# Temp / lock files
+~$*
+*.tmp

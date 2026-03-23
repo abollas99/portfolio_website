@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthony Bollas | IT Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ─── Circuit Board Background Canvas ─── -->
+  <canvas id="circuit-canvas"></canvas>
+
+  <!-- ─── Lightbox ─── -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lb-close" aria-label="Close">✕</button>
+      <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Previous">‹</button>
+      <img id="lb-img" src="" alt="" />
+      <p class="lightbox-caption" id="lb-caption"></p>
+      <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Next">›</button>
+    </div>
+  </div>
+
+  <!-- ─── Page Layout ─── -->
+  <div class="layout">
+
+    <!-- ═══════════════ SIDEBAR ═══════════════ -->
+    <aside class="sidebar">
+
+      <div class="profile">
+        <div class="avatar-ring">
+          <img src="assets/images/headshot.jpg" alt="Anthony Bollas" class="avatar" />
+        </div>
+        <div class="profile-info-wrap">
+          <h1 class="profile-name">Anthony Bollas</h1>
+          <p class="profile-title">IT Professional &amp; Developer</p>
+          <p class="profile-location">
+            <span class="dot-pulse"></span> Union, NJ
+          </p>
+        </div>
+        <!-- Social icons inline in header on mobile -->
+        <div class="profile-social-mobile">
+          <a href="https://github.com/abollas99" target="_blank" rel="noopener" class="social-link" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.16 1.18a11 11 0 0 1 2.88-.39c.98 0 1.96.13 2.88.39 2.19-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.19c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/realtone" target="_blank" rel="noopener" class="social-link" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Circuit Navigation Rail -->
+      <nav class="circuit-nav" id="circuit-nav">
+        <div class="rail-line"></div>
+        <ul class="nav-list">
+          <li class="nav-item active" data-section="about">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">About Me</span>
+          </li>
+          <li class="nav-item" data-section="experience">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">Experience</span>
+          </li>
+          <li class="nav-item" data-section="projects">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">Projects</span>
+          </li>
+          <li class="nav-item" data-section="skills">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">Skills</span>
+          </li>
+          <li class="nav-item" data-section="education">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">Education</span>
+          </li>
+          <li class="nav-item" data-section="contact">
+            <div class="node-wrap">
+              <div class="node"></div>
+              <div class="node-glow"></div>
+            </div>
+            <span class="nav-label">Contact</span>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="https://github.com/abollas99" target="_blank" class="social-link" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.16 1.18a11 11 0 0 1 2.88-.39c.98 0 1.96.13 2.88.39 2.19-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.19c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/realtone" target="_blank" class="social-link" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ═══════════════ CIRCUIT CONNECTOR ═══════════════ -->
+    <div class="circuit-connector">
+      <svg id="trace-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+    </div>
+
+    <!-- ═══════════════ CONTENT AREA ═══════════════ -->
+    <main class="content-area">
+
+      <!-- ─── ABOUT ME ─── -->
+      <section id="about" class="content-box active" data-label="01 // ABOUT ME">
+        <div class="section-header">
+          <span class="section-tag">01</span>
+          <h2>About Me</h2>
+        </div>
+        <div class="section-body">
+          <p class="bio">
+            IT professional with 5+ years of experience in technical support, hardware diagnostics, and
+            customer-facing technology roles. Skilled in troubleshooting across the Apple ecosystem,
+            Windows environments, and networking infrastructure. Background in full-stack development
+            with JavaScript, TypeScript, Angular, Python, and PostgreSQL. Currently pursuing CompTIA
+            Network+ with hands-on home lab experience in virtualization, network segmentation, and
+            systems administration.
+          </p>
+
+          <div class="hobbies">
+            <h3 class="sub-heading">Beyond the Terminal</h3>
+            <div class="hobby-grid">
+              <div class="hobby-card">
+                <div class="hobby-icon">⛰️</div>
+                <span>Hiking</span>
+              </div>
+              <div class="hobby-card">
+                <div class="hobby-icon">✈️</div>
+                <span>Taking Trips</span>
+              </div>
+              <div class="hobby-card">
+                <div class="hobby-icon">🧘</div>
+                <span>Self Care</span>
+              </div>
+              <div class="hobby-card">
+                <div class="hobby-icon">📡</div>
+                <span>Always Learning</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ─── TRIP PHOTOS SECTION ─────────────────────────────────────
+               To add photos: drop your images into assets/images/trips/
+               Then copy one of the .trip-photo-card blocks below and update
+               the src, alt, and caption text.
+          ──────────────────────────────────────────────────────────────── -->
+          <div class="trips-section">
+            <h3 class="sub-heading">Adventures</h3>
+            <div class="trips-grid" id="trips-grid">
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/el_yunque_hike.jpeg" alt="El Yunque Rainforest, Puerto Rico" loading="lazy" />
+                <p class="trip-caption">El Yunque Rainforest — Puerto Rico</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/el_yunque_hike_2.jpeg" alt="El Yunque Hike, Puerto Rico" loading="lazy" />
+                <p class="trip-caption">El Yunque Hike — Puerto Rico</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/DR_2024.jpeg" alt="Dominican Republic 2024" loading="lazy" />
+                <p class="trip-caption">Dominican Republic — 2024</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/dr_buggy.jpeg" alt="Dominican Republic Buggy Tour" loading="lazy" />
+                <p class="trip-caption">Buggy Tour — Dominican Republic</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/dr_cave.jpeg" alt="Dominican Republic Cave" loading="lazy" />
+                <p class="trip-caption">Cave Adventure — Dominican Republic</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/dr_food_1.jpeg" alt="Dominican Republic Local Cuisine" loading="lazy" />
+                <p class="trip-caption">Local Cuisine — Dominican Republic</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/dr_food_2.jpeg" alt="Dominican Republic Local Eats" loading="lazy" />
+                <p class="trip-caption">Local Eats — Dominican Republic</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/chichinitza.jpeg" alt="Chichen Itza, Mexico" loading="lazy" />
+                <p class="trip-caption">Chichen Itza — Mexico</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/mexico_cave.jpeg" alt="Cave Adventure, Mexico" loading="lazy" />
+                <p class="trip-caption">Cave Adventure — Mexico</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/brasil_2024.jpeg" alt="Brazil 2024" loading="lazy" />
+                <p class="trip-caption">Brazil — 2024</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/brasil_food.jpeg" alt="Brazil Local Cuisine" loading="lazy" />
+                <p class="trip-caption">Local Cuisine — Brazil</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/aruba_food_1.jpeg" alt="Aruba Local Cuisine" loading="lazy" />
+                <p class="trip-caption">Local Cuisine — Aruba</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/aruba_nightlife.jpeg" alt="Aruba Nightlife" loading="lazy" />
+                <p class="trip-caption">Nightlife — Aruba</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/bermuda.jpeg" alt="Bermuda" loading="lazy" />
+                <p class="trip-caption">Bermuda</p>
+              </div>
+
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/ocean_city_md.jpeg" alt="Ocean City, Maryland" loading="lazy" />
+                <p class="trip-caption">Ocean City — Maryland</p>
+              </div>
+
+              <!-- ── ADD YOUR NEXT TRIP PHOTO HERE ──────────────────────────
+              <div class="trip-photo-card">
+                <img src="assets/images/trips/your-photo.jpeg" alt="Description" loading="lazy" />
+                <p class="trip-caption">Caption — Destination</p>
+              </div>
+              ─────────────────────────────────────────────────────────────── -->
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─── EXPERIENCE ─── -->
+      <section id="experience" class="content-box" data-label="02 // EXPERIENCE">
+        <div class="section-header">
+          <span class="section-tag">02</span>
+          <h2>Experience</h2>
+        </div>
+        <div class="section-body">
+
+          <div class="timeline">
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="job-title">Software Developer Apprentice</h3>
+                  <p class="job-company">Apple</p>
+                </div>
+                <span class="job-date">Jan 2025 – Jun 2025</span>
+              </div>
+              <ul class="job-bullets">
+                <li>Upgraded an internal request management application to streamline administrator workflows, reducing back-and-forth communication required to resolve issues</li>
+                <li>Built a parser tool adopted by multiple teams, enabling employees to work more efficiently with internal resources</li>
+                <li>Launched the streamlined request tool for an additional admin team, expanding the tool's impact across the organization</li>
+                <li>Updated onboarding documentation to improve knowledge transfer for future apprentices</li>
+                <li>Delivered a company-wide presentation streamed across the organization, showcasing project outcomes and key learnings</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="job-title">Apple Specialist</h3>
+                  <p class="job-company">Apple</p>
+                </div>
+                <span class="job-date">2022 – Present</span>
+              </div>
+              <ul class="job-bullets">
+                <li>Triage customers to appropriate service paths including product purchases, phone support, and hardware repair appointments, supporting multiple customers simultaneously during peak hours</li>
+                <li>Troubleshoot cellular, configuration, data transfer, and network connectivity issues across the full Apple product ecosystem, including diagnosing VPN misconfigurations and resolving device setup failures</li>
+                <li>De-escalate frustrated customers by identifying root concerns, providing clear communication, and delivering effective resolutions</li>
+                <li>Partner with Genius Bar technicians to identify front-of-house solutions, reducing unnecessary repair appointments</li>
+                <li>Support overnight product launch and event preparations including rewiring cables, configuring displays to Apple specifications, and escalating malfunctioning devices</li>
+              </ul>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <div>
+                  <h3 class="job-title">Advanced Repair Agent</h3>
+                  <p class="job-company">Geek Squad (Best Buy)</p>
+                </div>
+                <span class="job-date">2020 – 2022</span>
+              </div>
+              <ul class="job-bullets">
+                <li>Diagnosed and repaired computers during in-person appointments, troubleshooting hardware and software issues including driver failures, OS corruption, and network connectivity problems</li>
+                <li>Performed hardware repairs and upgrades including RAM and hard drive replacement, and built custom PCs to customer specifications</li>
+                <li>Used Windows command-line tools (sfc /scannow, ipconfig, DISM) for diagnostics and guided remote customers through network troubleshooting procedures</li>
+                <li>Managed multiple concurrent appointments and de-escalated frustrated customers in a fast-paced retail environment</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── PROJECTS ─── -->
+      <section id="projects" class="content-box" data-label="03 // PROJECTS">
+        <div class="section-header">
+          <span class="section-tag">03</span>
+          <h2>Projects</h2>
+        </div>
+        <div class="section-body">
+
+          <!-- ─── PROJECT CARDS ──────────────────────────────────────────
+               To add a new project: copy one .project-card block below,
+               paste it inside .projects-grid, and fill in your details.
+               Optional: add a "project-link" anchor inside the card footer.
+          ──────────────────────────────────────────────────────────────── -->
+          <div class="projects-grid">
+
+            <div class="project-card">
+              <div class="project-card-header">
+                <span class="project-icon">🌐</span>
+                <div class="project-stack">
+                  <span class="stack-tag">TP-Link Omada</span>
+                  <span class="stack-tag">VLANs</span>
+                  <span class="stack-tag">Firewall</span>
+                  <span class="stack-tag">VPN</span>
+                </div>
+              </div>
+              <h3 class="project-title">Prosumer Network Lab</h3>
+              <p class="project-desc">
+                Designed and deployed a segmented home network with 5 VLANs (IoT, Lab, Printers, Primary, Guest)
+                using TP-Link Omada managed switches and access points. Configured firewall rules to enforce
+                inter-VLAN access control and set up a VPN for secure remote access.
+              </p>
+              <!-- Optional: add link below
+              <div class="project-footer">
+                <a href="https://github.com/abollas99/your-repo" target="_blank" class="project-link">View on GitHub →</a>
+              </div>
+              -->
+            </div>
+
+            <div class="project-card">
+              <div class="project-card-header">
+                <span class="project-icon">🛡️</span>
+                <div class="project-stack">
+                  <span class="stack-tag">Raspberry Pi</span>
+                  <span class="stack-tag">Pi-hole</span>
+                  <span class="stack-tag">Linux</span>
+                  <span class="stack-tag">DNS</span>
+                </div>
+              </div>
+              <h3 class="project-title">Home DNS Server</h3>
+              <p class="project-desc">
+                Deployed a Pi-hole DNS server on a Raspberry Pi to provide network-wide ad blocking and
+                malicious domain filtering. Configured blocklists for security and performance, set a static IP,
+                and updated the router to use Pi-hole as the primary DNS resolver.
+              </p>
+            </div>
+
+            <div class="project-card">
+              <div class="project-card-header">
+                <span class="project-icon">🖥️</span>
+                <div class="project-stack">
+                  <span class="stack-tag">Proxmox VE</span>
+                  <span class="stack-tag">Windows Server 2025</span>
+                  <span class="stack-tag">Active Directory</span>
+                  <span class="stack-tag">SCCM</span>
+                </div>
+              </div>
+              <h3 class="project-title">Active Directory Home Lab</h3>
+              <p class="project-desc">
+                Built a virtualized lab environment on Proxmox VE running Windows Server 2025 and Windows 11
+                Pro VMs, with an additional physical laptop joined to the domain. Configured ADDS, user
+                account management, GPOs, and deployed applications through MCM/SCCM.
+              </p>
+            </div>
+
+            <!-- ─── ADD YOUR NEXT PROJECT HERE ───────────────────────────
+            <div class="project-card">
+              <div class="project-card-header">
+                <span class="project-icon">🔧</span>
+                <div class="project-stack">
+                  <span class="stack-tag">Tech 1</span>
+                  <span class="stack-tag">Tech 2</span>
+                </div>
+              </div>
+              <h3 class="project-title">Your Project Name</h3>
+              <p class="project-desc">
+                Description of your project goes here.
+              </p>
+              <div class="project-footer">
+                <a href="#" target="_blank" class="project-link">View Project →</a>
+              </div>
+            </div>
+            ──────────────────────────────────────────────────────────── -->
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── SKILLS ─── -->
+      <section id="skills" class="content-box" data-label="04 // SKILLS">
+        <div class="section-header">
+          <span class="section-tag">04</span>
+          <h2>Skills</h2>
+        </div>
+        <div class="section-body">
+          <div class="skills-grid">
+
+            <div class="skill-group">
+              <h3 class="skill-group-title">
+                <span class="skill-icon">⚙️</span> Systems &amp; Administration
+              </h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Windows Server 2025</span>
+                <span class="skill-tag">Active Directory</span>
+                <span class="skill-tag">Group Policy (GPOs)</span>
+                <span class="skill-tag">MCM / SCCM</span>
+                <span class="skill-tag">Proxmox VE</span>
+                <span class="skill-tag">Raspberry Pi</span>
+                <span class="skill-tag">Linux</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group-title">
+                <span class="skill-icon">🌐</span> Networking
+              </h3>
+              <div class="skill-tags">
+                <span class="skill-tag">VLAN Configuration</span>
+                <span class="skill-tag">VPN Setup</span>
+                <span class="skill-tag">Firewall Rules</span>
+                <span class="skill-tag">DNS Management</span>
+                <span class="skill-tag">Pi-hole</span>
+                <span class="skill-tag">DHCP</span>
+                <span class="skill-tag">TCP/IP</span>
+                <span class="skill-tag">TP-Link Omada</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group-title">
+                <span class="skill-icon">💻</span> Development &amp; Data
+              </h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">Angular</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">GitHub</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group-title">
+                <span class="skill-icon">🔧</span> Hardware &amp; Diagnostics
+              </h3>
+              <div class="skill-tags">
+                <span class="skill-tag">PC Builds</span>
+                <span class="skill-tag">RAM / HDD Replacement</span>
+                <span class="skill-tag">Windows CMD Diagnostics</span>
+                <span class="skill-tag">Apple Ecosystem</span>
+                <span class="skill-tag">sfc / DISM / ipconfig</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-group-title">
+                <span class="skill-icon">🤝</span> Soft Skills
+              </h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Customer De-escalation</span>
+                <span class="skill-tag">Cross-functional Collaboration</span>
+                <span class="skill-tag">Multitasking</span>
+                <span class="skill-tag">Technical Presentations</span>
+                <span class="skill-tag">Documentation</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── EDUCATION ─── -->
+      <section id="education" class="content-box" data-label="05 // EDUCATION">
+        <div class="section-header">
+          <span class="section-tag">05</span>
+          <h2>Education &amp; Certifications</h2>
+        </div>
+        <div class="section-body">
+
+          <div class="edu-grid">
+
+            <div class="edu-card">
+              <div class="edu-icon">🎓</div>
+              <div class="edu-details">
+                <h3>Bachelor of Science in Computer Science</h3>
+                <p class="edu-school">Kean University — Union, NJ</p>
+                <p class="edu-year">2024</p>
+              </div>
+            </div>
+
+            <div class="edu-card">
+              <div class="edu-icon">🎓</div>
+              <div class="edu-details">
+                <h3>Associate of Science in Computer Science</h3>
+                <p class="edu-school">Union County College — Cranford, NJ</p>
+                <p class="edu-year">2021</p>
+              </div>
+            </div>
+
+            <div class="edu-card cert-card">
+              <div class="edu-icon">📋</div>
+              <div class="edu-details">
+                <h3>CompTIA Network+</h3>
+                <p class="edu-school">CompTIA</p>
+                <p class="edu-year cert-status">In Progress</p>
+              </div>
+              <div class="cert-badge">In Progress</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── CONTACT ─── -->
+      <section id="contact" class="content-box" data-label="06 // CONTACT">
+        <div class="section-header">
+          <span class="section-tag">06</span>
+          <h2>Get in Touch</h2>
+        </div>
+        <div class="section-body">
+          <p class="contact-intro">
+            I'm open to IT roles, development opportunities, and interesting conversations.
+            Reach out through any of the channels below.
+          </p>
+
+          <div class="contact-grid">
+
+            <a href="mailto:anthonybollas@proton.me" class="contact-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <h3>ProtonMail</h3>
+                <p>anthonybollas@proton.me</p>
+              </div>
+              <div class="contact-card-arrow">→</div>
+            </a>
+
+            <a href="mailto:bollascareer@gmail.com" class="contact-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <h3>Gmail</h3>
+                <p>bollascareer@gmail.com</p>
+              </div>
+              <div class="contact-card-arrow">→</div>
+            </a>
+
+            <a href="https://linkedin.com/in/realtone" target="_blank" class="contact-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/>
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <h3>LinkedIn</h3>
+                <p>linkedin.com/in/realtone</p>
+              </div>
+              <div class="contact-card-arrow">→</div>
+            </a>
+
+            <a href="https://github.com/abollas99" target="_blank" class="contact-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.16 1.18a11 11 0 0 1 2.88-.39c.98 0 1.96.13 2.88.39 2.19-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.19c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+              </div>
+              <div class="contact-card-body">
+                <h3>GitHub</h3>
+                <p>github.com/abollas99</p>
+              </div>
+              <div class="contact-card-arrow">→</div>
+            </a>
+
+          </div>
+        </div>
+      </section>
+
+    </main><!-- end .content-area -->
+  </div><!-- end .layout -->
+
+  <script src="js/circuit-bg.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
