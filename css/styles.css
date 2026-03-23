@@ -1134,6 +1134,35 @@ body.light-mode .icon-moon { display: block; }
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
+  cursor: zoom-in;
+  position: relative;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.project-proof:hover {
+  border-color: var(--border-bright);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.12);
+}
+
+/* Magnify icon overlay on hover */
+.project-proof::after {
+  content: '⤢';
+  position: absolute;
+  bottom: 2.2rem;   /* above the caption bar */
+  right: 0.6rem;
+  font-size: 1.1rem;
+  color: var(--cyan);
+  background: rgba(6, 9, 15, 0.7);
+  border-radius: 4px;
+  padding: 0.1rem 0.35rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  line-height: 1.5;
+}
+
+.project-proof:hover::after {
+  opacity: 1;
 }
 
 .project-diagram {

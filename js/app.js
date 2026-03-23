@@ -303,20 +303,31 @@
     function open(index) {
       if (!photos.length) buildPhotoList();
       current = ((index % photos.length) + photos.length) % photos.length;
-      lbImg.src        = photos[current].src;
-      lbImg.alt        = photos[current].caption;
+      lbImg.src         = photos[current].src;
+      lbImg.alt         = photos[current].caption;
       lbCap.textContent = photos[current].caption;
+      // Hide prev/next when viewing a standalone image (e.g. project diagram)
+      const solo = photos.length === 1;
+      btnPrev.style.display = solo ? 'none' : '';
+      btnNext.style.display = solo ? 'none' : '';
       overlay.classList.add('open');
       document.body.style.overflow = 'hidden';
       btnClose.focus();
     }
 
+    function openSingle(src, caption) {
+      photos  = [{ src: src, caption: caption }];
+      current = 0;
+      open(0);
+    }
+
     function close() {
       overlay.classList.remove('open');
       document.body.style.overflow = '';
+      photos = [];  // reset so next trip-photo click rebuilds the full list
     }
 
-    // Wire clicks on photo cards
+    // Wire clicks on photo cards (trip gallery)
     document.addEventListener('click', function(e) {
       const card = e.target.closest('.trip-photo-card:not(.placeholder-card)');
       if (card) {
@@ -324,6 +335,15 @@
         const img = card.querySelector('img');
         const idx = photos.findIndex(p => p.src === img.src);
         open(idx >= 0 ? idx : 0);
+        return;
+      }
+
+      // Wire clicks on project diagram images
+      const diagram = e.target.closest('.project-proof');
+      if (diagram) {
+        const img     = diagram.querySelector('.project-diagram');
+        const caption = diagram.querySelector('.project-diagram-caption')?.textContent || '';
+        if (img) openSingle(img.src, caption);
       }
     });
 
