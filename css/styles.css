@@ -35,6 +35,69 @@
   --transition:     0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ─── Light Mode Variables ─── */
+body.light-mode {
+  --bg:             #eef4fc;
+  --surface:        #ffffff;
+  --surface-2:      #e2edf8;
+  --surface-3:      #d4e4f4;
+  --border:         #b8d0e8;
+  --border-bright:  #82b0d8;
+
+  --cyan:           #1a6fc4;
+  --cyan-dim:       #1558a0;
+  --cyan-glow:      rgba(26, 111, 196, 0.28);
+  --cyan-glow-sm:   rgba(26, 111, 196, 0.14);
+
+  --green:          #00875a;
+  --green-dim:      #006644;
+
+  --text:           #0d1e30;
+  --text-dim:       #3d5878;
+  --text-muted:     #7a9ab8;
+
+  --circuit-line:   #c0d8f0;
+  --circuit-active: var(--cyan);
+}
+
+/* Light mode — override hardcoded backgrounds */
+body.light-mode .sidebar {
+  background: linear-gradient(180deg, rgba(220,234,250,0.99) 0%, rgba(210,228,248,0.99) 100%);
+}
+
+body.light-mode .circuit-connector {
+  background: rgba(210, 228, 248, 0.7);
+}
+
+body.light-mode .hobby-card,
+body.light-mode .trip-photo-card,
+body.light-mode .timeline-item,
+body.light-mode .project-card,
+body.light-mode .skill-group,
+body.light-mode .edu-card,
+body.light-mode .contact-card {
+  background: #ffffff;
+}
+
+/* Canvas — very subtle on light background */
+body.light-mode #circuit-canvas {
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
+
+/* SVG traces — recolor for light mode */
+body.light-mode #trace-svg path[stroke-width="1.5"] {
+  stroke: #b8d0e8;
+}
+body.light-mode #trace-svg path[stroke-width="2"] {
+  stroke: #1a6fc4;
+  filter: drop-shadow(0 0 4px rgba(26,111,196,0.5)) drop-shadow(0 0 10px rgba(26,111,196,0.25));
+}
+body.light-mode #trace-svg circle {
+  fill: #1a6fc4;
+  filter: drop-shadow(0 0 5px rgba(26,111,196,0.9)) drop-shadow(0 0 12px rgba(26,111,196,0.5));
+}
+
 /* ─── Reset ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -372,6 +435,51 @@ img { display: block; max-width: 100%; }
 .resume-download-btn:hover svg {
   transform: translateY(2px);
 }
+
+/* ─── Theme Toggle Button ─── */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.theme-toggle svg {
+  width: 15px;
+  height: 15px;
+  pointer-events: none;
+}
+
+.theme-toggle:hover {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan-glow-sm);
+  background: rgba(0, 212, 255, 0.06);
+}
+
+body.light-mode .theme-toggle:hover {
+  background: rgba(26, 111, 196, 0.08);
+}
+
+/* Sun shown in dark mode, moon shown in light mode */
+.icon-moon { display: none; }
+body.light-mode .icon-sun  { display: none; }
+body.light-mode .icon-moon { display: block; }
+
+/* Mobile toggle — same size as the social link icons */
+.theme-toggle-mobile {
+  width: 26px;
+  height: 26px;
+}
+.theme-toggle-mobile svg { width: 12px; height: 12px; }
 
 /* ═══════════════════════════════════════════
    CIRCUIT CONNECTOR
@@ -1035,6 +1143,64 @@ img { display: block; max-width: 100%; }
   border-top: 1px solid var(--border);
   letter-spacing: 0.04em;
 }
+
+/* ─── Terminal Proof Block ─── */
+.terminal-block {
+  margin-top: 1rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid #1a2a3e;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.71rem;
+  line-height: 1.55;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  background: #1a2535;
+  border-bottom: 1px solid #0f1e30;
+}
+
+.t-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.t-dot.t-red    { background: #ff5f57; }
+.t-dot.t-yellow { background: #febc2e; }
+.t-dot.t-green  { background: #28c840; }
+
+.t-title {
+  margin-left: 0.4rem;
+  font-size: 0.63rem;
+  color: #4a6080;
+  letter-spacing: 0.04em;
+}
+
+.terminal-body {
+  background: #070d14;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #1a2a3e #070d14;
+}
+
+.t-line       { color: #c8d8ea; white-space: nowrap; }
+.t-prompt     { color: #00d4ff; margin-right: 0.4em; }
+.t-ps         { color: #4fc3f7; margin-right: 0.4em; }
+.t-success    { color: #00ff9f; }
+.t-key        { color: #7ab0d8; }
+.t-val        { color: #00d4ff; }
+.t-header     { color: #3d5878; }
+.t-data       { color: #c8d8ea; padding-left: 0.5em; }
+.t-spacer     { height: 0.4em; }
 
 /* ─── Social Proof Quote ─── */
 .social-proof-quote {

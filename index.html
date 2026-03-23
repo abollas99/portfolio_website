@@ -45,7 +45,7 @@
             <span class="otw-dot"></span> Open to Opportunities
           </span>
         </div>
-        <!-- Social icons inline in header on mobile -->
+        <!-- Social icons + theme toggle inline in header on mobile -->
         <div class="profile-social-mobile">
           <a href="https://github.com/abollas99" target="_blank" rel="noopener" class="social-link" title="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.16 1.18a11 11 0 0 1 2.88-.39c.98 0 1.96.13 2.88.39 2.19-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.19c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
@@ -53,6 +53,10 @@
           <a href="https://linkedin.com/in/realtone" target="_blank" rel="noopener" class="social-link" title="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
           </a>
+          <button class="theme-toggle theme-toggle-mobile" id="theme-toggle-mobile" aria-label="Toggle light/dark mode">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -116,6 +120,12 @@
       </a>
 
       <div class="sidebar-footer">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <!-- Sun icon (shown in dark mode) -->
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <a href="https://github.com/abollas99" target="_blank" class="social-link" title="GitHub">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.94c.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.16 1.18a11 11 0 0 1 2.88-.39c.98 0 1.96.13 2.88.39 2.19-1.49 3.16-1.18 3.16-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.19c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
         </a>
@@ -148,18 +158,6 @@
             Network+ with hands-on home lab experience in virtualization, network segmentation, and
             systems administration.
           </p>
-
-          <div class="social-proof-quote">
-            <blockquote>
-              Anthony is one of the most reliable and solutions-oriented team members I've worked with.
-              He picks up new technology quickly, communicates clearly under pressure, and always goes
-              the extra mile to ensure customers leave happy.
-            </blockquote>
-            <div class="quote-attribution">
-              <svg class="li-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
-              Former Manager · LinkedIn Recommendation
-            </div>
-          </div>
 
           <div class="hobbies">
             <h3 class="sub-heading">Beyond the Terminal</h3>
@@ -400,6 +398,23 @@
                 malicious domain filtering. Configured blocklists for security and performance, set a static IP,
                 and updated the router to use Pi-hole as the primary DNS resolver.
               </p>
+              <div class="terminal-block">
+                <div class="terminal-bar">
+                  <span class="t-dot t-red"></span>
+                  <span class="t-dot t-yellow"></span>
+                  <span class="t-dot t-green"></span>
+                  <span class="t-title">pi@pihole: ~</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-line"><span class="t-prompt">pi@pihole:~$</span> pihole status</div>
+                  <div class="t-line t-success">  [✓] Pi-hole blocking is active</div>
+                  <div class="t-line"><span class="t-prompt">pi@pihole:~$</span> pihole -c -j | python3 -c "import sys,json; d=json.load(sys.stdin); [print(f'  {k}: {v}') for k,v in d.items() if 'dns' in k or 'ads' in k or 'domains' in k]"</div>
+                  <div class="t-line t-key">  dns_queries_today<span class="t-val">: 14,203</span></div>
+                  <div class="t-line t-key">  ads_blocked_today<span class="t-val">: 3,847</span></div>
+                  <div class="t-line t-key">  ads_percentage_today<span class="t-val">: 27.1</span></div>
+                  <div class="t-line t-key">  domains_being_blocked<span class="t-val">: 1,502,381</span></div>
+                </div>
+              </div>
             </div>
 
             <div class="project-card">
@@ -418,6 +433,27 @@
                 Pro VMs, with an additional physical laptop joined to the domain. Configured ADDS, user
                 account management, GPOs, and deployed applications through MCM/SCCM.
               </p>
+              <div class="terminal-block">
+                <div class="terminal-bar">
+                  <span class="t-dot t-red"></span>
+                  <span class="t-dot t-yellow"></span>
+                  <span class="t-dot t-green"></span>
+                  <span class="t-title">Windows PowerShell</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-line"><span class="t-ps">PS C:\></span> Get-ADUser -Filter * | Select Name, Enabled</div>
+                  <div class="t-line t-header">Name                      Enabled</div>
+                  <div class="t-line t-header">────                      ───────</div>
+                  <div class="t-line t-data">Administrator             True</div>
+                  <div class="t-line t-data">anthony.bollas            True</div>
+                  <div class="t-line t-data">svc.deploy                True</div>
+                  <div class="t-line t-spacer"></div>
+                  <div class="t-line"><span class="t-ps">PS C:\></span> Get-GPO -All | Select DisplayName</div>
+                  <div class="t-line t-data">Default Domain Policy</div>
+                  <div class="t-line t-data">Desktop Lockdown Policy</div>
+                  <div class="t-line t-data">Software Deployment GPO</div>
+                </div>
+              </div>
             </div>
 
             <!-- ─── ADD YOUR NEXT PROJECT HERE ───────────────────────────

@@ -343,6 +343,35 @@
     });
   }());
 
+  // ── Theme Toggle ──────────────────────────────────────────────────────────
+  (function initTheme() {
+    // Apply saved theme before paint to avoid flash
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light-mode');
+    }
+
+    function syncButtons() {
+      // Keep both toggles (desktop + mobile) in sync
+      const isLight = document.body.classList.contains('light-mode');
+      document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+        btn.setAttribute('aria-pressed', String(isLight));
+      });
+    }
+
+    function toggle() {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      syncButtons();
+    }
+
+    document.querySelectorAll('.theme-toggle').forEach(function(btn) {
+      btn.addEventListener('click', toggle);
+    });
+
+    syncButtons();
+  }());
+
   // Kick off after DOM fully painted
   if (document.readyState === 'complete') {
     init();
