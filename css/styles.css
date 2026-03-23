@@ -65,6 +65,10 @@ body.light-mode .sidebar {
   background: linear-gradient(180deg, rgba(220,234,250,0.99) 0%, rgba(210,228,248,0.99) 100%);
 }
 
+body.light-mode .content-area {
+  background: rgba(238, 244, 252, 0.97);
+}
+
 body.light-mode .circuit-connector {
   background: rgba(210, 228, 248, 0.7);
 }
@@ -77,6 +81,16 @@ body.light-mode .skill-group,
 body.light-mode .edu-card,
 body.light-mode .contact-card {
   background: #ffffff;
+}
+
+/* Light mode — fix hardcoded #fff text (invisible on light bg) */
+body.light-mode .profile-name,
+body.light-mode .section-header h2,
+body.light-mode .job-title,
+body.light-mode .project-title,
+body.light-mode .edu-details h3,
+body.light-mode .contact-card-body h3 {
+  color: var(--text);
 }
 
 /* Canvas — very subtle on light background */
