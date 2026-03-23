@@ -303,6 +303,76 @@ img { display: block; max-width: 100%; }
   background: rgba(0, 212, 255, 0.06);
 }
 
+/* ─── Open-to-Work Badge ─── */
+.open-to-work-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+  padding: 0.28rem 0.7rem;
+  font-size: 0.68rem;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
+  color: var(--green);
+  background: rgba(0, 255, 159, 0.08);
+  border: 1px solid rgba(0, 255, 159, 0.28);
+  border-radius: 20px;
+  animation: badge-pulse 2.4s ease-in-out infinite;
+}
+
+.otw-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: dot-blink 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 255, 159, 0); }
+  50%       { box-shadow: 0 0 10px 2px rgba(0, 255, 159, 0.12); }
+}
+
+/* ─── Resume Download Button ─── */
+.resume-download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.85rem 0 0.65rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.78rem;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.resume-download-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.resume-download-btn:hover {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: var(--cyan);
+  box-shadow: 0 0 16px var(--cyan-glow-sm);
+  color: #fff;
+}
+
+.resume-download-btn:hover svg {
+  transform: translateY(2px);
+}
+
 /* ═══════════════════════════════════════════
    CIRCUIT CONNECTOR
 ═══════════════════════════════════════════ */
@@ -894,6 +964,122 @@ img { display: block; max-width: 100%; }
   box-shadow: 0 0 8px var(--cyan-glow-sm);
 }
 
+/* ─── Skill Tier Labels ─── */
+.skill-tier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+
+.skill-tier:last-child { margin-bottom: 0; }
+
+.skill-tier-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.65rem;
+  font-family: 'Share Tech Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.skill-tier-label::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skill-tier.tier-expert .skill-tier-label { color: var(--cyan); }
+.skill-tier.tier-expert .skill-tier-label::before { background: var(--cyan); box-shadow: 0 0 5px var(--cyan); }
+.skill-tier.tier-expert .skill-tag { border-color: rgba(0,212,255,0.25); }
+
+.skill-tier.tier-proficient .skill-tier-label { color: var(--green); }
+.skill-tier.tier-proficient .skill-tier-label::before { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.skill-tier.tier-proficient .skill-tag { border-color: rgba(0,255,159,0.2); }
+
+.skill-tier.tier-familiar .skill-tier-label { color: var(--text-dim); }
+.skill-tier.tier-familiar .skill-tier-label::before { background: var(--text-dim); }
+.skill-tier.tier-familiar .skill-tag { opacity: 0.8; }
+
+/* ─── Project Proof (topology / screenshots) ─── */
+.project-proof {
+  margin-top: 1rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.project-diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.project-proof:hover .project-diagram {
+  transform: scale(1.02);
+}
+
+.project-diagram-caption {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: 'Share Tech Mono', monospace;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Social Proof Quote ─── */
+.social-proof-quote {
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface-2);
+  border-left: 3px solid var(--cyan);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  position: relative;
+}
+
+.social-proof-quote blockquote {
+  font-size: 0.85rem;
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.65;
+  margin-bottom: 0.6rem;
+}
+
+.social-proof-quote blockquote::before {
+  content: '"';
+  font-size: 2rem;
+  color: var(--cyan-dim);
+  line-height: 0;
+  vertical-align: -0.55em;
+  margin-right: 0.15em;
+  font-style: normal;
+}
+
+.quote-attribution {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.quote-attribution .li-icon {
+  width: 14px;
+  height: 14px;
+  color: #0a66c2;
+  flex-shrink: 0;
+}
+
 /* ═══════════════════════════════════════════
    EDUCATION SECTION
 ═══════════════════════════════════════════ */
@@ -1327,6 +1513,20 @@ img { display: block; max-width: 100%; }
   .lightbox-inner img { max-height: 72vh; }
   .lightbox-prev { left: -1.75rem; }
   .lightbox-next { right: -1.75rem; }
+
+  /* Open-to-work badge — hide on mobile to keep header compact */
+  .open-to-work-badge { display: none; }
+
+  /* Resume button — hide in sidebar on mobile (tiny sidebar), show later if needed */
+  .resume-download-btn { display: none; }
+
+  /* Social proof quote — compact on mobile */
+  .social-proof-quote { padding: 0.75rem 0.9rem; margin-top: 1rem; }
+  .social-proof-quote blockquote { font-size: 0.8rem; }
+
+  /* Skill tiers — tighten spacing */
+  .skill-tier { gap: 0.4rem; margin-bottom: 0.6rem; }
+  .skill-tier-label { font-size: 0.6rem; }
 }
 
 /* ── Very small phones (≤ 374px) ── */
