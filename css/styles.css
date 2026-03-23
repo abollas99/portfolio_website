@@ -1291,6 +1291,40 @@ body.light-mode .icon-moon { display: block; }
   flex-shrink: 0;
 }
 
+/* Graduation photo thumbnail in education cards */
+.edu-photo-wrap {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid var(--border-bright);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.15);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.edu-card:hover .edu-photo-wrap {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.edu-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+body.light-mode .edu-photo-wrap {
+  border-color: #1a6fc4;
+  box-shadow: 0 0 12px rgba(26, 111, 196, 0.15);
+}
+
+body.light-mode .edu-card:hover .edu-photo-wrap {
+  box-shadow: 0 0 20px rgba(26, 111, 196, 0.3);
+}
+
 .edu-details h3 {
   font-size: 0.95rem;
   font-weight: 600;

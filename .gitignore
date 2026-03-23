@@ -14,8 +14,8 @@ desktop.ini
 *.swp
 *.swo
 
-# Large originals — web-optimised copies live in assets/images/trips/
-# Keep only trips/ subfolder; exclude everything else in assets/images/
+# Large originals — web-optimised copies live in assets/images/trips/ and assets/images/grad/
+# Exclude raw source files directly in assets/images/; subfolders (trips/, grad/) are committed.
 assets/images/*.jpeg
 assets/images/*.jpg
 assets/images/*.png
@@ -25,6 +25,12 @@ assets/images/*.dmg
 assets/images/*.pdf
 assets/images/*.docx
 assets/images/~$*
+
+# Drop-zone originals (root level — move to assets/ before committing)
+/*.jpeg
+/*.jpg
+/*.HEIC
+/new_resume.pdf
 
 # Claude local settings (may contain personal config)
 .claude/settings.local.json
